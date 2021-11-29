@@ -3,10 +3,11 @@ import java.awt.event.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 
 public class VigenerePage {
     public static void main(String[] args){
-// Create frame with title Registration Demo
+    // Create frame with title
         JFrame frame= new JFrame();
         frame.setTitle("CipherBuddy");
         JPanel mainPanel = new JPanel();
@@ -25,11 +26,11 @@ public class VigenerePage {
         JLabel keyLabel = new JLabel("Enter your key:");
         JLabel inputLabel = new JLabel("Input:");
 
-        JLabel encryptedLabel     = new JLabel("");
-        JLabel decryptedLabel        = new JLabel("");
-        JLabel resultLabel     = new JLabel("");
+        JLabel encryptedLabel = new JLabel("");
+        JLabel decryptedLabel = new JLabel("");
+        JLabel resultLabel = new JLabel("");
 
-        JTextField keyInput          = new JTextField(20);
+        JTextField keyInput = new JTextField(20);
         JTextArea inputArea = new JTextArea(5, 20);
 
 
@@ -49,17 +50,20 @@ public class VigenerePage {
         constr.gridx=0; constr.gridy=4;
         constr.gridwidth = 2;
         constr.anchor = GridBagConstraints.CENTER;
-// Button with text "Register"
+        //encrypt button
         JButton encryptButton = new JButton("Encrypt");
 
-// add a listener to button
         encryptButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 encryptedLabel.setText("Encrypted input:");
                 decryptedLabel.setText("");
-                resultLabel.setText("Encrypted text");
+                try {
+                    resultLabel.setText(VigenereCipher.encryptByteArray(inputArea.getText().getBytes(), keyInput.getText()).toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
                 keyInput.setText("");
                 inputArea.setText("");
@@ -76,7 +80,8 @@ public class VigenerePage {
             {
                 encryptedLabel.setText("");
                 decryptedLabel.setText("Decrypted input:");
-                resultLabel.setText("Decrypted text");
+                resultLabel.setText(VigenereCipher.decryptByteArray(inputArea.getText().getBytes(), keyInput.getText()).toString());
+
 
                 keyInput.setText("");
                 inputArea.setText("");
