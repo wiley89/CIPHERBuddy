@@ -1,60 +1,58 @@
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Random;	
 
 public class RSA {
 	
-	private BigInteger P;
-    private BigInteger Q;
-    private BigInteger N;
-    private BigInteger PHI;
-    private BigInteger e;
-    private BigInteger d;
-    private int maxLength = 1024;
-    private Random R;
+	private final static BigInteger one = new BigInteger("1");
+	private final static SecureRandom random = new SecureRandom();
+
+	private BigInteger privateKey;
+	private BigInteger modulus;
+	
+	private BigInteger phi;
+	private BigInteger p;
+	private BigInteger q;
  
-    public RSA()
-    {
-        R = new Random();
-        P = BigInteger.probablePrime(maxLength, R);
-         Q = BigInteger.probablePrime(maxLength, R);
-        N = P.multiply(Q);
-       PHI = P.subtract(BigInteger.ONE).multiply(  Q.subtract(BigInteger.ONE));
-        e = BigInteger.probablePrime(maxLength / 2, R);
-        while (PHI.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(PHI) < 0)
-        {
-            e.add(BigInteger.ONE);
-        }
-        d = e.modInverse(PHI);
+    public RSA() {
+    	p = BigInteger.probablePrime(1024/2, random);
+        q = BigInteger.probablePrime(1024/2, random);
+        phi = (p.subtract(one)).multiply(q.subtract(one));
+        modulus = p.multiply(q);                                  
     }
+
  
-    public RSA(BigInteger e, BigInteger d, BigInteger N)
-    {
-        this.e = e;
-        this.d = d;
-        this.N = N;
-    }
- 
-    public static void main (String [] arguments) throws IOException
-    {
-        RSA rsa = new RSA();
+    public static void main (String [] arguments) throws IOException {
+    	RSA rsa = new RSA();
         DataInputStream input = new DataInputStream(System.in);
         String inputString;
         System.out.println("Enter message you wish to send.");
         inputString = input.readLine();
         System.out.println("Encrypting the message: " + inputString);
-        System.out.println("The message in bytes is:: "   + bToS(inputString.getBytes()));
+        System.out.println("The message in bytes is:: "
+                + bToS(inputString.getBytes()));
         // encryption
-        byte[] cipher = rsa.encryptMessage(inputString.getBytes());
+        byte[] cipher = rsa.encryptByteArray(inputString.getBytes(), new BigInteger("65537"));
         // decryption
-        byte[] plain = rsa.decryptMessage(cipher);
+        byte[] plain = rsa.decryptByteArray(cipher, rsa.getPrivateKey());
         System.out.println("Decrypting Bytes: " + bToS(plain));
         System.out.println("Plain message is: " + new String(plain));
     }
  
-    private static String bToS(byte[] cipher)
-    {
+    // Encrypting the message
+    public byte[] encryptByteArray(byte[] file, BigInteger publicKey) {
+    	privateKey = publicKey.modInverse(phi);
+        return (new BigInteger(file)).modPow(publicKey, modulus).toByteArray();
+    }
+ 
+    // Decrypting the message
+    public byte[] decryptByteArray(byte[] file, BigInteger privateKey) {
+        return (new BigInteger(file)).modPow(privateKey, modulus).toByteArray();
+    }
+    
+    private static String bToS(byte[] cipher) {
         String temp = "";
         for (byte b : cipher)
         {
@@ -62,16 +60,8 @@ public class RSA {
         }
         return temp;
     }
- 
-    // Encrypting the message
-    public byte[] encryptMessage(byte[] message)
-    {
-        return (new BigInteger(message)).modPow(e, N).toByteArray();
-    }
- 
-    // Decrypting the message
-    public byte[] decryptMessage(byte[] message)
-    {
-        return (new BigInteger(message)).modPow(d, N).toByteArray();
+    
+    public BigInteger getPrivateKey() {
+    	return privateKey;
     }
 }
