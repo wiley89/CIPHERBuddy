@@ -13,17 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.Button;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 import java.awt.dnd.DropTarget;
 
 public class homePage extends JFrame
 {
-    private filechooser fc = new  filechooser();
+    private filechooser f;
     private String filePath;
 
     public static void main(String[] args)
@@ -45,12 +41,12 @@ public class homePage extends JFrame
         Button b1 = new Button("Encrypt");
         Button b2 = new Button("Decrypt");
 
-        ActionListener fcAL = new filechooserActionListener();
-
         add(logo);
         add(b1);
         add(b2);
-        b1.addActionListener(new ActionListener()
+
+        Scanner input = new Scanner(System.in);
+        b1.addActionListener(new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
                 {
@@ -72,20 +68,21 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        file.addActionListener(new ActionListener()
+                        file.addActionListener(new ActionListener() 
                             {
-                                public void actionPerformed(ActionEvent e)
+                                public void actionPerformed(ActionEvent e) 
                                 {
                                     if(e.getSource()== file)
                                     {
-                                        fc.fileChooser();
+                                        f = new filechooser();
+                                        f.fileChooser();
                                     }
                                 }
                             });
 
                         submit.addActionListener(new ActionListener() 
                             {
-                                public void actionPerformed(ActionEvent e)
+                                public void actionPerformed(ActionEvent e) 
                                 {
                                     if(e.getSource()== submit)
                                     {
@@ -114,11 +111,7 @@ public class homePage extends JFrame
                                                     if(e.getSource()== eb1)
                                                     {
                                                         VigenereEncrypt vig = new VigenereEncrypt();
-                                                        try {
-                                                            vig.vig(strPath2ByteArray());
-                                                        } catch (IOException ioException) {
-                                                            ioException.printStackTrace();
-                                                        }
+                                                        vig.vig();
                                                     }
                                                 }
                                             });
@@ -130,11 +123,7 @@ public class homePage extends JFrame
                                                     if(e.getSource()== eb2)
                                                     {
                                                         RSAEncrypt rsa = new RSAEncrypt();
-                                                        try {
-                                                            rsa.rsa(strPath2ByteArray());
-                                                        } catch (IOException ioException) {
-                                                            ioException.printStackTrace();
-                                                        }
+                                                        rsa.rsa();
                                                     }
                                                 }
                                             });
@@ -170,8 +159,8 @@ public class homePage extends JFrame
                                 {
                                     if(e.getSource()== file)
                                     {
-                                        fc = new filechooser();
-                                        fc.fileChooser();
+                                        f = new filechooser();
+                                        f.fileChooser();
                                     }
                                 }
                             });
@@ -207,12 +196,7 @@ public class homePage extends JFrame
                                                     if(e.getSource()== db1)
                                                     {
                                                         VigenereDecrypt vig = new VigenereDecrypt();
-
-                                                        try {
-                                                            vig.vig(strPath2ByteArray());
-                                                        } catch (IOException ioException) {
-                                                            ioException.printStackTrace();
-                                                        }
+                                                        vig.vig();
                                                     }
                                                 }
                                             });
@@ -224,11 +208,7 @@ public class homePage extends JFrame
                                                     if(e.getSource()== db2)
                                                     {
                                                         RSADecrypt rsa = new RSADecrypt();
-                                                        try {
-                                                            rsa.rsa(strPath2ByteArray());
-                                                        } catch (IOException ioException) {
-                                                            ioException.printStackTrace();
-                                                        }
+                                                        rsa.rsa();
                                                     }
                                                 }
                                             });
@@ -238,14 +218,5 @@ public class homePage extends JFrame
                     }
                 }
             });
-    }
-
-    public byte[] strPath2ByteArray() throws IOException {
-        System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-        Path path = Paths.get(filePath);
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-        byte[] fileContent = Files.readAllBytes(path);
-        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-        return fileContent;
     }
 }
