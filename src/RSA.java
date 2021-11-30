@@ -10,7 +10,6 @@ public class RSA {
 	private final static SecureRandom random = new SecureRandom();
 
 	private BigInteger privateKey;
-	private BigInteger modulus;
 	
 	private BigInteger phi;
 	private BigInteger p;
@@ -19,8 +18,7 @@ public class RSA {
     public RSA() {
     	p = BigInteger.probablePrime(1024/2, random);
         q = BigInteger.probablePrime(1024/2, random);
-        phi = (p.subtract(one)).multiply(q.subtract(one));
-        modulus = p.multiply(q);                                  
+        phi = (p.subtract(one)).multiply(q.subtract(one));                                  
     }
 
  
@@ -34,22 +32,22 @@ public class RSA {
         System.out.println("The message in bytes is:: "
                 + bToS(inputString.getBytes()));
         // encryption
-        byte[] cipher = rsa.encryptByteArray(inputString.getBytes(), new BigInteger("65537"));
+        byte[] cipher = rsa.encryptByteArray(inputString.getBytes(), new BigInteger("65537"), rsa.getP().multiply(rsa.getQ()));
         // decryption
-        byte[] plain = rsa.decryptByteArray(cipher, rsa.getPrivateKey());
+        byte[] plain = rsa.decryptByteArray(cipher, rsa.getPrivateKey(), rsa.getP(), rsa.getQ());
         System.out.println("Decrypting Bytes: " + bToS(plain));
         System.out.println("Plain message is: " + new String(plain));
     }
  
     // Encrypting the message
-    public byte[] encryptByteArray(byte[] file, BigInteger publicKey) {
+    public byte[] encryptByteArray(byte[] file, BigInteger publicKey, BigInteger modulus) {
     	privateKey = publicKey.modInverse(phi);
         return (new BigInteger(file)).modPow(publicKey, modulus).toByteArray();
     }
  
     // Decrypting the message
-    public byte[] decryptByteArray(byte[] file, BigInteger privateKey) {
-        return (new BigInteger(file)).modPow(privateKey, modulus).toByteArray();
+    public byte[] decryptByteArray(byte[] file, BigInteger privateKey, BigInteger p, BigInteger q) {
+        return (new BigInteger(file)).modPow(privateKey, p.multiply(q)).toByteArray();
     }
     
     private static String bToS(byte[] cipher) {
@@ -63,5 +61,13 @@ public class RSA {
     
     public BigInteger getPrivateKey() {
     	return privateKey;
+    }
+    
+    public BigInteger getP() {
+    	return p;
+    }
+    
+    public BigInteger getQ() {
+    	return q;
     }
 }
