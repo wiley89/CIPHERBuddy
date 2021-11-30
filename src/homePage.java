@@ -1,14 +1,26 @@
 
+/**
+ * Write a description of class homepage here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Button;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
 import java.util.Scanner;
+
+import java.awt.dnd.DropTarget;
 
 public class homePage extends JFrame
 {
-    private String filePath;
     private filechooser f;
+    private String filePath;
 
     public static void main(String[] args)
     {
@@ -24,7 +36,7 @@ public class homePage extends JFrame
         setLayout(homelayout);
         setTitle("CSDS 344 Team 10 Encryption/ Decryption Algorithms");
         setSize(400, 400);
-        
+
         JLabel logo = new JLabel(new ImageIcon("logo.png"));
         Button b1 = new Button("Encrypt");
         Button b2 = new Button("Decrypt");
@@ -56,17 +68,18 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        file.addActionListener(new ActionListener()
-                        {
-                            public void actionPerformed(ActionEvent e)
+                        file.addActionListener(new ActionListener() 
                             {
-                                if(e.getSource()== file)
+                                public void actionPerformed(ActionEvent e) 
                                 {
-                                    f = new filechooser();
-                                    f.fileChooser();
+                                    if(e.getSource()== file)
+                                    {
+                                        f = new filechooser();
+                                        f.fileChooser();
+                                    }
                                 }
-                            }
-                        });
+                            });
+
                         submit.addActionListener(new ActionListener() 
                             {
                                 public void actionPerformed(ActionEvent e) 
@@ -97,20 +110,18 @@ public class homePage extends JFrame
                                                 {
                                                     if(e.getSource()== eb1)
                                                     {
-                                                        System.out.println("pressed vig cypher");
                                                         VigenereEncrypt vig = new VigenereEncrypt();
                                                         vig.vig();
                                                     }
                                                 }
                                             });
-                                            
+
                                         eb2.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== eb2)
                                                     {
-                                                        System.out.println("pressed RSA cypher");
                                                         RSAEncrypt rsa = new RSAEncrypt();
                                                         rsa.rsa();
                                                     }
@@ -142,8 +153,19 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-
-                        submit.addActionListener(new ActionListener()
+                        file.addActionListener(new ActionListener() 
+                            {
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    if(e.getSource()== file)
+                                    {
+                                        f = new filechooser();
+                                        f.fileChooser();
+                                    }
+                                }
+                            });
+                            
+                        submit.addActionListener(new ActionListener() 
                             {
                                 public void actionPerformed(ActionEvent e) 
                                 {
@@ -166,27 +188,25 @@ public class homePage extends JFrame
                                         add(db2);
                                         add(db3);
                                         add(db4);
-                                        
+
                                         db1.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== db1)
                                                     {
-                                                        System.out.println("pressed vig cypher");
                                                         VigenereDecrypt vig = new VigenereDecrypt();
                                                         vig.vig();
                                                     }
                                                 }
                                             });
-                                            
+
                                         db2.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== db2)
                                                     {
-                                                        System.out.println("pressed RSA cypher");
                                                         RSADecrypt rsa = new RSADecrypt();
                                                         rsa.rsa();
                                                     }

@@ -19,6 +19,9 @@ import java.awt.dnd.DropTarget;
 
 public class homePage extends JFrame
 {
+    private filechooser f;
+    private String filePath;
+
     public static void main(String[] args)
     {
         homePage homepage = new homePage();
@@ -33,7 +36,7 @@ public class homePage extends JFrame
         setLayout(homelayout);
         setTitle("CSDS 344 Team 10 Encryption/ Decryption Algorithms");
         setSize(400, 400);
-        
+
         JLabel logo = new JLabel(new ImageIcon("logo.png"));
         Button b1 = new Button("Encrypt");
         Button b2 = new Button("Decrypt");
@@ -65,8 +68,18 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        MyDragDropListener inputFile = new MyDragDropListener();
-                        new DropTarget(file, inputFile); 
+                        file.addActionListener(new ActionListener() 
+                            {
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    if(e.getSource()== file)
+                                    {
+                                        f = new filechooser();
+                                        f.fileChooser();
+                                    }
+                                }
+                            });
+
                         submit.addActionListener(new ActionListener() 
                             {
                                 public void actionPerformed(ActionEvent e) 
@@ -97,20 +110,18 @@ public class homePage extends JFrame
                                                 {
                                                     if(e.getSource()== eb1)
                                                     {
-                                                        System.out.println("pressed vig cypher");
                                                         VigenereEncrypt vig = new VigenereEncrypt();
                                                         vig.vig();
                                                     }
                                                 }
                                             });
-                                            
+
                                         eb2.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== eb2)
                                                     {
-                                                        System.out.println("pressed RSA cypher");
                                                         RSAEncrypt rsa = new RSAEncrypt();
                                                         rsa.rsa();
                                                     }
@@ -142,8 +153,18 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        MyDragDropListener inputFile = new MyDragDropListener();
-                        new DropTarget(file, inputFile); 
+                        file.addActionListener(new ActionListener() 
+                            {
+                                public void actionPerformed(ActionEvent e) 
+                                {
+                                    if(e.getSource()== file)
+                                    {
+                                        f = new filechooser();
+                                        f.fileChooser();
+                                    }
+                                }
+                            });
+                            
                         submit.addActionListener(new ActionListener() 
                             {
                                 public void actionPerformed(ActionEvent e) 
@@ -167,27 +188,25 @@ public class homePage extends JFrame
                                         add(db2);
                                         add(db3);
                                         add(db4);
-                                        
+
                                         db1.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== db1)
                                                     {
-                                                        System.out.println("pressed vig cypher");
                                                         VigenereDecrypt vig = new VigenereDecrypt();
                                                         vig.vig();
                                                     }
                                                 }
                                             });
-                                            
+
                                         db2.addActionListener(new ActionListener() 
                                             {
                                                 public void actionPerformed(ActionEvent e) 
                                                 {
                                                     if(e.getSource()== db2)
                                                     {
-                                                        System.out.println("pressed RSA cypher");
                                                         RSADecrypt rsa = new RSADecrypt();
                                                         rsa.rsa();
                                                     }
