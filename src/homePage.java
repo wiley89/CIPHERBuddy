@@ -8,7 +8,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.dnd.DropTarget;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
@@ -150,9 +149,8 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        MyDragDropListener inputFile = new MyDragDropListener();
-                        new DropTarget(file, inputFile); 
-                        submit.addActionListener(new ActionListener() 
+
+                        submit.addActionListener(new ActionListener()
                             {
                                 public void actionPerformed(ActionEvent e) 
                                 {
