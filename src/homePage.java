@@ -8,17 +8,16 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Button;
-import java.awt.GridLayout;
-import javax.swing.JFrame;
-import java.util.Scanner;
-
 import java.awt.dnd.DropTarget;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 public class homePage extends JFrame
 {
+    private String filePath;
+    private filechooser f;
+
     public static void main(String[] args)
     {
         homePage homepage = new homePage();
@@ -65,8 +64,17 @@ public class homePage extends JFrame
                         add(file);
                         add(submit);
 
-                        MyDragDropListener inputFile = new MyDragDropListener();
-                        new DropTarget(file, inputFile); 
+                        file.addActionListener(new ActionListener()
+                        {
+                            public void actionPerformed(ActionEvent e)
+                            {
+                                if(e.getSource()== file)
+                                {
+                                    f = new filechooser();
+                                    f.fileChooser();
+                                }
+                            }
+                        });
                         submit.addActionListener(new ActionListener() 
                             {
                                 public void actionPerformed(ActionEvent e) 
