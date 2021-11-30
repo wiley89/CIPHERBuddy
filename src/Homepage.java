@@ -82,7 +82,7 @@ public class homePage extends JFrame
                                         setSize(400, 400);
 
                                         Button eb1 = new Button("Vigenere Cipher");
-                                        Button eb2 = new Button("Encryption Algorithm 2");
+                                        Button eb2 = new Button("RSA Cipher");
                                         Button eb3 = new Button("Encryption Algorithm 3");
                                         Button eb4 = new Button("Encryption Algorithm 4");
 
@@ -100,6 +100,19 @@ public class homePage extends JFrame
                                                         System.out.println("pressed vig cypher");
                                                         VigenereEncrypt vig = new VigenereEncrypt();
                                                         vig.vig();
+                                                    }
+                                                }
+                                            });
+                                            
+                                        eb2.addActionListener(new ActionListener() 
+                                            {
+                                                public void actionPerformed(ActionEvent e) 
+                                                {
+                                                    if(e.getSource()== eb2)
+                                                    {
+                                                        System.out.println("pressed RSA cypher");
+                                                        RSAEncrypt rsa = new RSAEncrypt();
+                                                        rsa.rsa();
                                                     }
                                                 }
                                             });
@@ -146,7 +159,7 @@ public class homePage extends JFrame
                                         setSize(400, 400);
 
                                         Button db1 = new Button("Vigenere Cipher");
-                                        Button db2 = new Button("Decryption Algorithm 2");
+                                        Button db2 = new Button("RSA Cipher");
                                         Button db3 = new Button("Decryption Algorithm 3");
                                         Button db4 = new Button("Decryption Algorithm 4");
 
@@ -164,6 +177,19 @@ public class homePage extends JFrame
                                                         System.out.println("pressed vig cypher");
                                                         VigenereDecrypt vig = new VigenereDecrypt();
                                                         vig.vig();
+                                                    }
+                                                }
+                                            });
+                                            
+                                        db2.addActionListener(new ActionListener() 
+                                            {
+                                                public void actionPerformed(ActionEvent e) 
+                                                {
+                                                    if(e.getSource()== db2)
+                                                    {
+                                                        System.out.println("pressed RSA cypher");
+                                                        RSADecrypt rsa = new RSADecrypt();
+                                                        rsa.rsa();
                                                     }
                                                 }
                                             });
