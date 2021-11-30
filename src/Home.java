@@ -110,7 +110,12 @@ public class Home extends JFrame
                                                     {
                                                         VigenereEncrypt vig = new VigenereEncrypt();
                                                         System.out.println(f.getPath());
-                                                        vig.vig("t".getBytes());
+                                                        filePath = f.getPath();
+                                                        try {
+                                                            vig.vig(str2ByteArray());
+                                                        } catch (IOException ioException) {
+                                                            ioException.printStackTrace();
+                                                        }
                                                     }
                                                 }
                                             });
@@ -123,7 +128,12 @@ public class Home extends JFrame
                                                     {
                                                         RSAEncrypt rsa = new RSAEncrypt();
                                                         System.out.println(f.getPath());
-                                                        rsa.rsa("t".getBytes());
+                                                        filePath = f.getPath();
+                                                        try {
+                                                            rsa.rsa(str2ByteArray());
+                                                        } catch (IOException ioException) {
+                                                            ioException.printStackTrace();
+                                                        }
                                                     }
                                                 }
                                             });
@@ -195,8 +205,13 @@ public class Home extends JFrame
                                                     if(e.getSource()== db1)
                                                     {
                                                         VigenereDecrypt vig = new VigenereDecrypt();
-
-                                                        vig.vig("v".getBytes());
+                                                        System.out.println(f.getPath());
+                                                        filePath = f.getPath();
+                                                        try {
+                                                            vig.vig(str2ByteArray());
+                                                        } catch (IOException ioException) {
+                                                            ioException.printStackTrace();
+                                                        }
                                                     }
                                                 }
                                             });
@@ -208,7 +223,13 @@ public class Home extends JFrame
                                                     if(e.getSource()== db2)
                                                     {
                                                         RSADecrypt rsa = new RSADecrypt();
-                                                        rsa.rsa("v".getBytes());
+                                                        System.out.println(f.getPath());
+                                                        filePath = f.getPath();
+                                                        try {
+                                                            rsa.rsa(str2ByteArray());
+                                                        } catch (IOException ioException) {
+                                                            ioException.printStackTrace();
+                                                        }
                                                     }
                                                 }
                                             });

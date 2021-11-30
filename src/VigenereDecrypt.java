@@ -62,13 +62,11 @@ public class VigenereDecrypt
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    //encryptedLabel.setText("Encrypted input:");
-                    //decryptedLabel.setText("");
                     /*
                     try {
-                    //resultLabel.setText(VigenereCipher.decryptByteArray(inputArea.getText().getBytes(), keyInput.getText()).toString());
+                        result = VigenereCipher.decryptByteArray(bytes, keyInput.getText());
                     } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                        ioException.printStackTrace();
                     }*/
 
                     keyInput.setText("");
