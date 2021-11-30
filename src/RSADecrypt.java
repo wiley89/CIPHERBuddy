@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class RSADecrypt 
 {
-    public void rsa()
+    public void rsa(byte[] bytes)
     {
         // Create frame with title
         JFrame frame= new JFrame();

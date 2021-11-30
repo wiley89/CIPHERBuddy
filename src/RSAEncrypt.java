@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class RSAEncrypt 
 {
-    public void rsa()
+    public void rsa(byte[] in)
     {
         // Create frame with title
         JFrame frame= new JFrame();
@@ -57,14 +57,11 @@ public class RSAEncrypt
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    //encryptedLabel.setText("Encrypted input:");
-                    //decryptedLabel.setText("");
-                    /*
                     try {
-                    //resultLabel.setText(VigenereCipher.encryptByteArray(inputArea.getText().getBytes(), keyInput.getText()).toString());
+                        System.out.println("Encrypted Vigenere:" + VigenereCipher.encryptByteArray(in, keyInput.getText()).toString());
                     } catch (IOException ioException) {
                     ioException.printStackTrace();
-                    }*/
+                    }
 
                     keyInput.setText("");
                 }

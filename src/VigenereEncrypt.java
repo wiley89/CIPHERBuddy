@@ -9,8 +9,9 @@ public class VigenereEncrypt
 {
     /**
      * NEED to update method to take a byte array input in the method header
+     * @param bytes
      */
-    public void vig()
+    public void vig(byte[] bytes)
     {
         // Create frame with title
         JFrame frame= new JFrame();
