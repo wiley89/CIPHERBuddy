@@ -8,27 +8,21 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Button;
-import java.awt.GridLayout;
-import javax.swing.JFrame;
-import java.nio.charset.StandardCharsets;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
-import java.awt.dnd.DropTarget;
-
-public class homePage extends JFrame
+public class Home extends JFrame
 {
     private filechooser f;
     private String filePath;
 
     public static void main(String[] args)
     {
-        homePage homepage = new homePage();
+        Home homepage = new Home();
     }
 
-    public homePage()
+    public Home()
     {
         // home page
         setVisible(true);
