@@ -8,26 +8,21 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Button;
-import java.awt.GridLayout;
-import javax.swing.JFrame;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
-import java.awt.dnd.DropTarget;
-
-public class homePage extends JFrame
+public class Home extends JFrame
 {
     private filechooser f;
     private String filePath;
 
     public static void main(String[] args)
     {
-        homePage homepage = new homePage();
+        Home homepage = new Home();
     }
 
-    public homePage()
+    public Home()
     {
         // home page
         setVisible(true);
@@ -75,7 +70,6 @@ public class homePage extends JFrame
                                     if(e.getSource()== file)
                                     {
                                         f = new filechooser();
-                                        f.fileChooser();
                                     }
                                 }
                             });
@@ -111,7 +105,8 @@ public class homePage extends JFrame
                                                     if(e.getSource()== eb1)
                                                     {
                                                         VigenereEncrypt vig = new VigenereEncrypt();
-                                                        vig.vig();
+                                                        System.out.println(f.getPath());
+                                                        vig.vig("t".getBytes());
                                                     }
                                                 }
                                             });
@@ -123,7 +118,8 @@ public class homePage extends JFrame
                                                     if(e.getSource()== eb2)
                                                     {
                                                         RSAEncrypt rsa = new RSAEncrypt();
-                                                        rsa.rsa();
+                                                        System.out.println(f.getPath());
+                                                        rsa.rsa("t".getBytes());
                                                     }
                                                 }
                                             });
@@ -160,7 +156,6 @@ public class homePage extends JFrame
                                     if(e.getSource()== file)
                                     {
                                         f = new filechooser();
-                                        f.fileChooser();
                                     }
                                 }
                             });
@@ -196,7 +191,8 @@ public class homePage extends JFrame
                                                     if(e.getSource()== db1)
                                                     {
                                                         VigenereDecrypt vig = new VigenereDecrypt();
-                                                        vig.vig();
+
+                                                        vig.vig("v".getBytes());
                                                     }
                                                 }
                                             });
@@ -208,7 +204,7 @@ public class homePage extends JFrame
                                                     if(e.getSource()== db2)
                                                     {
                                                         RSADecrypt rsa = new RSADecrypt();
-                                                        rsa.rsa();
+                                                        rsa.rsa("v".getBytes());
                                                     }
                                                 }
                                             });
