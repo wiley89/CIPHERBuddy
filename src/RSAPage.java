@@ -13,7 +13,7 @@ public class RSAPage {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         JPanel headerPanel = new JPanel();
-        JLabel headerLabel = new JLabel("Vigenere Cipher");
+        JLabel headerLabel = new JLabel("RSA Encryption");
         headerPanel.add(headerLabel);
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints constr = new GridBagConstraints();
