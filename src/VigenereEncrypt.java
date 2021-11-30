@@ -10,6 +10,12 @@ import java.nio.file.Path;
 
 public class VigenereEncrypt 
 {
+    public byte[] resultArray;
+
+    public byte[] getResultArray() {
+        return resultArray;
+    }
+
     /**
      * NEED to update method to take a byte array input in the method header
      * @param bytes
@@ -73,6 +79,7 @@ public class VigenereEncrypt
                         byte[] resultArr = VigenereCipher.encryptByteArray(bytes, keyInput.getText());
                         //File f = new File("VigenereEncrypt.txt");
                         //Files.write(Path.of(f.getPath()), resultArr);
+                        resultArray = resultArr;
                         result.setText(resultArr.toString());
                         System.out.println(resultArr.toString());
                     } catch (IOException ioException) {

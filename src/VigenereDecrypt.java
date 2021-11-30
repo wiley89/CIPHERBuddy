@@ -7,6 +7,11 @@ import java.io.IOException;
 
 public class VigenereDecrypt 
 {
+    public byte[] resultArray;
+
+    public byte[] getResultArray() {
+        return resultArray;
+    }
     /**
      * NEED to update method to take a byte array input in the method header
      * @param bytes
@@ -65,12 +70,17 @@ public class VigenereDecrypt
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    /*
+
                     try {
-                        result = VigenereCipher.decryptByteArray(bytes, keyInput.getText());
+                        byte[] resultArr = VigenereCipher.encryptByteArray(bytes, keyInput.getText());
+                        //File f = new File("VigenereEncrypt.txt");
+                        //Files.write(Path.of(f.getPath()), resultArr);
+                        resultArray = resultArr;
+                        result.setText(resultArr.toString());
+                        System.out.println(resultArr.toString());
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
-                    }*/
+                    }
 
                     keyInput.setText("");
                 }

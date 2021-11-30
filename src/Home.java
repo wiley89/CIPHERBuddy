@@ -20,6 +20,8 @@ public class Home extends JFrame
 {
     private filechooser f;
     private String filePath;
+    private byte[] resultVig;
+    private byte[] decryptVig;
 
     public static void main(String[] args)
     {
@@ -113,7 +115,7 @@ public class Home extends JFrame
                                                         filePath = f.getPath();
                                                         try {
                                                             vig.vig(str2ByteArray());
-                                                        } catch (IOException ioException) {
+                                                            resultVig = vig.getResultArray();                                                        } catch (IOException ioException) {
                                                             ioException.printStackTrace();
                                                         }
                                                     }
@@ -209,6 +211,12 @@ public class Home extends JFrame
                                                         filePath = f.getPath();
                                                         try {
                                                             vig.vig(str2ByteArray());
+                                                        } catch (IOException ioException) {
+                                                            ioException.printStackTrace();
+                                                        }
+                                                        decryptVig = vig.getResultArray();
+                                                        try {
+                                                            Files.write(Paths.get(filePath), decryptVig);
                                                         } catch (IOException ioException) {
                                                             ioException.printStackTrace();
                                                         }
