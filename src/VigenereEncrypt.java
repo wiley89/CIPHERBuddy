@@ -3,7 +3,10 @@ import java.awt.event.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class VigenereEncrypt 
 {
@@ -30,7 +33,8 @@ public class VigenereEncrypt
         JLabel keyLabel = new JLabel("Enter your key:");
         JLabel processLabel = new JLabel("");
 
-        JLabel cipherLabel = new JLabel("Vigenere Cipher:");
+        JLabel cipherLabel = new JLabel("Encipher result:");
+        JLabel result = new JLabel("");
         JLabel explanationLabel1 = new JLabel("The vigenere cipher uses an polyalphabetic  key, ");
         JLabel explanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
         JLabel explanationLabel3 = new JLabel("of the corresponding key character");
@@ -40,6 +44,8 @@ public class VigenereEncrypt
 
         constr.gridx=0; constr.gridy=1;
         panel.add(cipherLabel, constr);
+        constr.gridx=1;
+        panel.add(result, constr);
         constr.gridx=0; constr.gridy=2;
         panel.add(keyLabel, constr);
         constr.gridx=1;
@@ -64,7 +70,11 @@ public class VigenereEncrypt
                 {
 
                     try {
-                    System.out.println(VigenereCipher.encryptByteArray(bytes, keyInput.getText()).toString());
+                        byte[] resultArr = VigenereCipher.encryptByteArray(bytes, keyInput.getText());
+                        //File f = new File("VigenereEncrypt.txt");
+                        //Files.write(Path.of(f.getPath()), resultArr);
+                        result.setText(resultArr.toString());
+                        System.out.println(resultArr.toString());
                     } catch (IOException ioException) {
                     ioException.printStackTrace();
                     }

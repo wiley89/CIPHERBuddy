@@ -30,7 +30,8 @@ public class VigenereDecrypt
         JLabel keyLabel = new JLabel("Enter your key:");
         JLabel processLabel = new JLabel("");
 
-        JLabel cipherLabel = new JLabel("Vigenere Cipher:");
+        JLabel cipherLabel = new JLabel("Decrypt result:");
+        JLabel result = new JLabel("");
         JLabel explanationLabel1 = new JLabel("The vigenere cipher uses an polyalphabetic  key, ");
         JLabel explanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
         JLabel explanationLabel3 = new JLabel("of the corresponding key character");
@@ -40,6 +41,8 @@ public class VigenereDecrypt
 
         constr.gridx=0; constr.gridy=1;
         panel.add(cipherLabel, constr);
+        constr.gridx=1;
+        panel.add(result, constr);
         constr.gridx=0; constr.gridy=2;
         panel.add(keyLabel, constr);
         constr.gridx=1;
