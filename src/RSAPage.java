@@ -27,7 +27,7 @@ public class RSAPage {
         JLabel cipherLabel = new JLabel("RSA Encryption:");
         JLabel explanationLabel1 = new JLabel("Two prime numbers(p and q) which are selected with a primality test");
         JLabel explanationLabel2 = new JLabel("The modulus(n) is found using the following formula: n = p x q ");
-        JLabel explanationLabel3 = new JLabel("The cipher(c) is derived using the following formula: c = m^e mod n");
+        JLabel explanationLabel3 = new JLabel("The cipher(c) is derived from the public key(e) and the input byte array in interger form(m) using the following formula: c = m^e mod n");
         JTextField keyInput = new JTextField(20);
         //JTextArea inputArea = new JTextArea(5, 20);
 
