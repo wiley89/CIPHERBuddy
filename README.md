@@ -5,3 +5,4 @@ integrate algs
 wiley, akhila, toan -> alg
 render byte array
 plan presentation
+logo resize
