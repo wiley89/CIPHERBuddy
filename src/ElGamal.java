@@ -49,7 +49,7 @@ public class ElGamal {
 	
     public static void main(String[] args) throws IOException {
     	DataInputStream input = new DataInputStream(System.in);
-        System.out.println("Enter your private key");
+        System.out.println("Enter your key");
         String key = input.readLine();
     	ElGamal test = new ElGamal(new BigInteger(key));
     	DataInputStream input2 = new DataInputStream(System.in);
