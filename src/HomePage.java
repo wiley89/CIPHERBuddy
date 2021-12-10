@@ -89,97 +89,17 @@ public class HomePage extends JFrame {
         encryptPanel.add(enElGamalButton);
         encryptPanel.add(eb4);
 
-        //encrypt Vigenere panel
-        /*
-        enVigPanel = new JPanel();
-        enVigPanel.setLayout(new GridLayout(2, 1));
 
-        JPanel enVigHeaderPanel = new JPanel();
-        JLabel headerLabel = new JLabel("Vigenere Cipher");
-        enVigHeaderPanel.add(headerLabel);
-
-        enVigPanel.add(enVigHeaderPanel);
-
-        JPanel enVigMainPanel = new JPanel(new GridBagLayout());
-
-        GridBagConstraints constr = new GridBagConstraints();
-        constr.insets = new Insets(5, 5, 5, 5);
-        constr.anchor = GridBagConstraints.WEST;
-
-
-        JLabel explanationLabel1 = new JLabel("The vigenere cipher uses an polyalphabetic  key, ");
-        JLabel explanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
-        JLabel explanationLabel3 = new JLabel("of the corresponding key character");
-
-
-        //JTextArea inputArea = new JTextArea(5, 20);
-
-        JLabel cipherLabel = new JLabel("Encipher result:");
-        constr.gridx=0; constr.gridy=1;
-        enVigMainPanel.add(cipherLabel, constr);
-
-        JLabel result = new JLabel("");
-        constr.gridx=1;
-        enVigMainPanel.add(result, constr);
-
-        JLabel keyLabel = new JLabel("Enter your key:");
-        constr.gridx=0; constr.gridy=2;
-        enVigMainPanel.add(keyLabel, constr);
-
-        JTextField keyInput = new JTextField(20);
-        constr.gridx=1;
-        enVigMainPanel.add(keyInput, constr);
-
-        JLabel processLabel = new JLabel("");
-        constr.gridx=0; constr.gridy=3;
-        enVigMainPanel.add(processLabel, constr);
-
-        constr.gridx=1;
-        enVigMainPanel.add(explanationLabel1, constr);
-
-        constr.gridy=4;
-        enVigMainPanel.add(explanationLabel2, constr);
-
-        constr.gridy=5;
-        enVigMainPanel.add(explanationLabel3, constr);
-
-
-        //encrypt button
-        JButton encryptVigButton = new JButton("Encrypt");
-        constr.gridy=6;
-        constr.gridwidth = 2;
-        constr.anchor = GridBagConstraints.CENTER;
-        enVigMainPanel.add(encryptVigButton, constr);
-         */
-
-        //encrypt RSA panel
-
-        //encrypt El Gamal panel
-
-        //encrypt vigenere panel
-
-        //Decrypt Panel
-
-
-        // add action listener to all the buttons
-        //encrypt buttons
-        /*
-        enVigButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                remove(encryptPanel);
-                add(enVigPanel);
-            }
-        });*/
-
+        //
         enVigButton.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
                 if(e.getSource()== enVigButton)
                 {
-                    VigenereEncrypt vig = new VigenereEncrypt();
+                    remove(encryptPanel);
+                    VigEncrypt vig = new VigEncrypt();
+                    add(vig);
                     System.out.println(filePath);
                     try {
                         vig.vig(str2ByteArray(filePath));
@@ -238,6 +158,7 @@ public class HomePage extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 remove(homePanel);
+                add(encryptPanel);
             }
         });
 
