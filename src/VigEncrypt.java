@@ -20,7 +20,7 @@ public class VigEncrypt extends JPanel
      * NEED to update method to take a byte array input in the method header
      * @param bytes
      */
-    public void vig(byte[] bytes)
+    public VigEncrypt(byte[] bytes)
     {
         // Create frame with title
         JPanel headerPanel = new JPanel();
