@@ -3,8 +3,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -319,11 +318,21 @@ public class HomePage extends JFrame {
 
     }
 
-    public byte[] str2ByteArray(String fPath) throws IOException {
+    public byte[] str2ByteArray(String fPath) throws IOException
+    {
         Path path = Paths.get(fPath);
         System.out.println(fPath);
         byte[] fileContent = Files.readAllBytes(path);
         System.out.println(fileContent.length);
         return fileContent;
+    }
+
+    public File fileRenderer(byte[] decrypted) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream b = new ByteArrayInputStream(decrypted);
+        ObjectInputStream o = new ObjectInputStream(b);
+        File renderedFile = (File) o.readObject();
+        b.close();
+        o.close();
+        return renderedFile;
     }
 }
