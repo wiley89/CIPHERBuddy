@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -115,8 +116,18 @@ public class Home extends JFrame
                                                         filePath = f.getPath();
                                                         try {
                                                             vig.vig(str2ByteArray());
-                                                            resultVig = vig.getResultArray();                                                        } catch (IOException ioException) {
+                                                            resultVig = vig.getResultArray();
+                                                            System.out.println(resultVig.length + "AAAAAAAAAAAAAAAA");
+
+                                                        } catch (IOException ioException) {
                                                             ioException.printStackTrace();
+                                                        }
+                                                        if (resultVig != null) {
+                                                            try(FileOutputStream fos = new FileOutputStream("vigEncrypt.txt")) {
+                                                                fos.write(resultVig);
+                                                            } catch (IOException ioException) {
+                                                                ioException.printStackTrace();
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -209,12 +220,10 @@ public class Home extends JFrame
                                                         VigenereDecrypt vig = new VigenereDecrypt();
                                                         System.out.println(f.getPath());
                                                         filePath = f.getPath();
-                                                        try {
-                                                            vig.vig(str2ByteArray());
-                                                        } catch (IOException ioException) {
-                                                            ioException.printStackTrace();
-                                                        }
+
+                                                        vig.vig(resultVig);
                                                         decryptVig = vig.getResultArray();
+
                                                         try {
                                                             Files.write(Paths.get(filePath), decryptVig);
                                                         } catch (IOException ioException) {
@@ -250,7 +259,9 @@ public class Home extends JFrame
     }
     public byte[] str2ByteArray() throws IOException {
         Path path = Paths.get(filePath);
+        System.out.println(filePath);
         byte[] fileContent = Files.readAllBytes(path);
+        System.out.println(fileContent.length);
         return fileContent;
     }
 }
