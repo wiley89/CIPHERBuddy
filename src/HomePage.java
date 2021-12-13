@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class HomePage extends JFrame {
 
@@ -144,8 +145,19 @@ public class HomePage extends JFrame {
                     //File f = new File("VigenereEncrypt.txt");
                     //Files.write(Path.of(f.getPath()), resultArr);
                     result.setText(resultArray.toString());
-                    System.out.println(resultArray.toString());
-                    System.out.println(resultArray.length + "len");
+                    /*
+                    System.out.println("Original");
+                    System.out.println(Arrays.toString(str2ByteArray(filePath)));
+                    System.out.println("Encrypted");
+                    System.out.println(Arrays.toString(resultArray));
+                    System.out.println("Decrypted");
+                    System.out.println(Arrays.toString(VigenereCipher.decryptByteArray(resultArray, "key")));
+                    System.out.println(resultArray.length + "len");*/
+                    try {
+                        fileRenderer(VigenereCipher.decryptByteArray(resultArray, keyInput.getText()));
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        classNotFoundException.printStackTrace();
+                    }
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -323,6 +335,7 @@ public class HomePage extends JFrame {
         Path path = Paths.get(fPath);
         System.out.println(fPath);
         byte[] fileContent = Files.readAllBytes(path);
+        System.out.println(fileContent[0]);
         System.out.println(fileContent.length);
         return fileContent;
     }
