@@ -67,14 +67,12 @@ public class HomePage extends JFrame {
 
         //Home Panel
         homePanel = new JPanel();
-        homePanel.setLayout(new GridLayout(3, 1));
+        homePanel.setLayout(new GridLayout(2, 1));
         JLabel logo = new JLabel(new ImageIcon("logo.png"));
         Button encryptButton = new Button("Encrypt");
-        Button decryptButton = new Button("Decrypt");
 
         homePanel.add(logo);
         homePanel.add(encryptButton);
-        homePanel.add(decryptButton);
 
         //Encrypt Panel
         encryptPanel = new JPanel();
@@ -132,6 +130,9 @@ public class HomePage extends JFrame {
         //encrypt button
         JButton vigEncryptButton = new JButton("Encrypt");
         vigEncryptPanel.add(vigEncryptButton, constr);
+        constr.gridy=7;
+        JButton vigDecryptButton = new JButton("Decrypt and render file");
+        vigEncryptPanel.add(vigDecryptButton, constr);
 
 
         // Encrypts byte array with key with Vigenere Cipher
@@ -142,17 +143,10 @@ public class HomePage extends JFrame {
 
                 try {
                     resultArray = VigenereCipher.encryptByteArray(str2ByteArray(filePath), keyInput.getText());
-                    //File f = new File("VigenereEncrypt.txt");
-                    //Files.write(Path.of(f.getPath()), resultArr);
-                    result.setText(resultArray.toString());
-                    /*
-                    System.out.println("Original");
-                    System.out.println(Arrays.toString(str2ByteArray(filePath)));
-                    System.out.println("Encrypted");
+                    result.setText("Encrypted byte array printed to console");
+                    System.out.println("Encrypted byte array");
                     System.out.println(Arrays.toString(resultArray));
-                    System.out.println("Decrypted");
-                    System.out.println(Arrays.toString(VigenereCipher.decryptByteArray(resultArray, "key")));
-                    System.out.println(resultArray.length + "len");*/
+
                     try {
                         fileRenderer(VigenereCipher.decryptByteArray(resultArray, keyInput.getText()));
                     } catch (ClassNotFoundException classNotFoundException) {
@@ -161,11 +155,22 @@ public class HomePage extends JFrame {
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-
-                keyInput.setText("");
             }
         });
 
+        vigDecryptButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                try {
+                    fileRenderer(VigenereCipher.decryptByteArray(resultArray, keyInput.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+        });
 
 
         //opens the Vig Encrypt Page
@@ -177,101 +182,6 @@ public class HomePage extends JFrame {
                 {
                     remove(encryptPanel);
                     add(vigEncryptPanel);
-                }
-            }
-        });
-
-
-        /* ----------DECRYPT------------  */
-
-        //Decrypt Panel
-        JPanel decryptPanel = new JPanel();
-        decryptPanel.setLayout(new GridLayout(2, 2));
-
-        Button deVigButton = new Button("Vigenere Cipher");
-        Button deRsaButton = new Button("RSA Cipher");
-        Button deElGamalButton = new Button("El Gamal Cipher");
-        Button db4 = new Button("Decryption Algorithm 4");
-
-        decryptPanel.add(deVigButton);
-        decryptPanel.add(deRsaButton);
-        decryptPanel.add(deElGamalButton);
-        decryptPanel.add(db4);
-
-
-        //Vigenere Decrypt
-        JPanel vigDecryptPanel = new JPanel(new GridBagLayout());
-        constr = new GridBagConstraints();
-        //constr.insets = new Insets(5, 5, 5, 5);
-        //constr.anchor = GridBagConstraints.WEST;
-
-        constr.gridx=0; constr.gridy=0;
-        keyLabel = new JLabel("Enter your key:");
-        processLabel = new JLabel("");
-
-        cipherLabel = new JLabel("Decipher result:");
-        JLabel vigDecryptResult = new JLabel("");
-        explanationLabel1 = new JLabel("The vigenere cipher uses an polyalphabetic  key, ");
-        explanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
-        explanationLabel3 = new JLabel("of the corresponding key character");
-
-        JTextField vigDecryptKeyInput = new JTextField(20);
-        //JTextArea inputArea = new JTextArea(5, 20);
-
-        constr.gridx=0; constr.gridy=1;
-        vigDecryptPanel.add(cipherLabel, constr);
-        constr.gridx=1;
-        vigDecryptPanel.add(vigDecryptResult, constr);
-        constr.gridx=0; constr.gridy=2;
-        vigDecryptPanel.add(keyLabel, constr);
-        constr.gridx=1;
-        vigDecryptPanel.add(vigDecryptKeyInput, constr);
-        constr.gridx=0; constr.gridy=3;
-        vigDecryptPanel.add(processLabel, constr);
-        constr.gridx=1;
-        vigDecryptPanel.add(explanationLabel1, constr);
-        constr.gridy=4;
-        vigDecryptPanel.add(explanationLabel2, constr);
-        constr.gridy=5;
-        vigDecryptPanel.add(explanationLabel3, constr);
-        constr.gridy=6;
-        //constr.gridwidth = 1;
-        constr.anchor = GridBagConstraints.CENTER;
-        //encrypt button
-        JButton vigDecryptButton = new JButton("Decrypt");
-        vigDecryptPanel.add(vigDecryptButton, constr);
-
-        // Decrypts byte array with key with Vigenere Cipher
-        vigDecryptButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-
-                try {
-                    resultArray = VigenereCipher.decryptByteArray(str2ByteArray(filePath), vigDecryptKeyInput.getText());
-                    //File f = new File("VigenereEncrypt.txt");
-                    //Files.write(Path.of(f.getPath()), resultArr);
-                    vigDecryptResult.setText(resultArray.toString());
-                    System.out.println(resultArray.toString());
-                    System.out.println(resultArray.length + "len");
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-
-                vigDecryptKeyInput.setText("");
-            }
-        });
-
-
-        //opens the Vig Encrypt Page
-        deVigButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                if(e.getSource()== deVigButton)
-                {
-                    remove(decryptPanel);
-                    add(vigDecryptPanel);
                 }
             }
         });
@@ -319,15 +229,6 @@ public class HomePage extends JFrame {
             }
         });
 
-        decryptButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                remove(homePanel);
-                add(decryptPanel);
-            }
-        });
-
     }
 
     public byte[] str2ByteArray(String fPath) throws IOException
@@ -341,7 +242,8 @@ public class HomePage extends JFrame {
     }
 
     public void fileRenderer(byte[] decrypted) throws IOException, ClassNotFoundException {
-        File file =  new File("");
+        File file =  new File("file");
+        //file.createNewFile();
         try {
 
             // Initialize a pointer
