@@ -236,7 +236,7 @@ public class HomePage extends JFrame {
             {
 
                 try {
-                    resultArray = VigenereCipher.encryptByteArray(str2ByteArray(filePath), vigDecryptKeyInput.getText());
+                    resultArray = VigenereCipher.decryptByteArray(str2ByteArray(filePath), vigDecryptKeyInput.getText());
                     //File f = new File("VigenereEncrypt.txt");
                     //Files.write(Path.of(f.getPath()), resultArr);
                     vigDecryptResult.setText(resultArray.toString());
