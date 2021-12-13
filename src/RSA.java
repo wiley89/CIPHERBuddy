@@ -1,76 +1,70 @@
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.Random;	
+	
 
 public class RSA {
 	
+
+	
 	private final static BigInteger one = new BigInteger("1");
 	private final static SecureRandom random = new SecureRandom();
-
-	private BigInteger privateKey;
 	
-	private BigInteger phi;
-	private BigInteger p;
-	private BigInteger q;
-	private BigInteger modulus;
- 
-    public RSA() {
-    	p = BigInteger.probablePrime(1024/2, random);
-        q = BigInteger.probablePrime(1024/2, random);
-        phi = (p.subtract(one)).multiply(q.subtract(one));
-        modulus = p.multiply(q);
-        System.out.println("Generate large prime numbers p: " + p + " and q: " + q);
-    }
 
- 
     public static void main (String [] arguments) throws IOException {
-    	RSA rsa = new RSA();
-        DataInputStream input = new DataInputStream(System.in);
-        String inputString;
-        System.out.println("Enter message you wish to send.");
-        inputString = input.readLine();
-        System.out.println("Encrypting the message: " + inputString);
-        System.out.println("The message in bytes is:: "
-                + bToS(inputString.getBytes()));
-        // encryption
-        byte[] cipher = rsa.encryptByteArray(inputString.getBytes(), new BigInteger("65537"), rsa.getModulus());
-        // decryption
-        byte[] plain = rsa.decryptByteArray(cipher, rsa.getPrivateKey(), rsa.getModulus());
-        System.out.println("Decrypting Bytes: " + bToS(plain));
-        System.out.println("Plain message is: " + new String(plain));
     }
  
     // Encrypting the message
-    public byte[] encryptByteArray(byte[] file, BigInteger publicKey, BigInteger modulus) {
-    	privateKey = publicKey.modInverse(phi);
-    	System.out.println("The cipher(c) is derived from the given public key(e), modulus(n) and the input byte array in interger form(m) using the following formula: c = m^e mod n , then converted to byte array");
-    	System.out.println("c = " + new BigInteger(file) + "^" + publicKey + " mod " + modulus);
-        return (new BigInteger(file)).modPow(publicKey, modulus).toByteArray();
+    public byte[] encryptByteArray(byte[] file) {
+    	BigInteger p = BigInteger.probablePrime(2, random);
+    	BigInteger q = BigInteger.probablePrime(2, random);
+    	BigInteger mod = p.multiply(q);
+    	BigInteger T = (p.subtract(one)).multiply(q.subtract(one));
+    	int e;
+    	for (e = 2; e < T.intValue(); e++) {
+    		 
+            // e is for public key exponent
+            if (gcd(e, T.intValue()) == 1) {
+                break;
+            }
+        }
+    	System.out.println("the value of e = " + e);
+    	int d = 0;
+        for (int i = 0; i <= 9; i++) {
+            int x = 1 + (i * T.intValue());
+ 
+            // d is for private key exponent
+            if (x % e == 0) {
+                d = x / e;
+                break;
+            }
+        }
+        System.out.println("the value of d = " + d);
+        byte[] cipher = file;
+        for (byte c : cipher) {
+        	c = (byte) ((Math.pow(c, e)) % mod.intValue());
+        }
+        return cipher;
     }
  
     // Decrypting the message
-    public byte[] decryptByteArray(byte[] file, BigInteger privateKey, BigInteger modulus) {
-    	System.out.println("The cipher(c) is decrypted from the privateKey(d) and the modulus(n) which is kept private using the following formula: c^d = m^ed = m mod n , then converted to byte array");
-        return (new BigInteger(file)).modPow(privateKey, modulus).toByteArray();
-    }
-    
-    private static String bToS(byte[] cipher) {
-        String temp = "";
-        for (byte b : cipher)
-        {
-            temp += Byte.toString(b);
+    public byte[] decryptByteArray(byte[] file, BigInteger privateKey, BigInteger mod) {
+    	byte[] decrypted = file;
+        for (byte c : decrypted) {
+        	BigInteger C = BigDecimal.valueOf(c).toBigInteger();
+        	c = (byte) ((C.pow(privateKey.intValue())).mod(mod)).intValue();
         }
-        return temp;
+        return decrypted;
     }
     
-    public BigInteger getPrivateKey() {
-    	return privateKey;
+    static int gcd(int e, int z)
+    {
+        if (e == 0)
+            return z;
+        else
+            return gcd(z % e, e);
     }
     
-    public BigInteger getModulus() {
-    	return modulus;
-    }
     
 }
