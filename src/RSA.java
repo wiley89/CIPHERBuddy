@@ -11,7 +11,7 @@ public class RSA {
 	private final static SecureRandom random = new SecureRandom();
 	
 	private int e;
-	private int d = 0;
+	private BigInteger d = new BigInteger("0");
 	private BigInteger mod;
 
     public static void main (String [] arguments) throws IOException {
@@ -19,8 +19,8 @@ public class RSA {
  
     // Encrypting the message
     public byte[] encryptByteArray(byte[] file) {
-    	BigInteger p = BigInteger.probablePrime(2, random);
-    	BigInteger q = BigInteger.probablePrime(2, random);
+    	BigInteger p = BigInteger.probablePrime(2048, random);
+    	BigInteger q = BigInteger.probablePrime(2048, random);
     	mod = p.multiply(q);
     	BigInteger T = (p.subtract(one)).multiply(q.subtract(one));
     	for (e = 2; e < T.intValue(); e++) {
@@ -36,7 +36,7 @@ public class RSA {
  
             // d is for private key exponent
             if (x % e == 0) {
-                d = x / e;
+                d = new BigInteger(String.valueOf(x/e));
                 break;
             }
         }
@@ -49,12 +49,12 @@ public class RSA {
     }
  
     // Decrypting the message
-    public byte[] decryptByteArray(byte[] file) {
+    public byte[] decryptByteArray(byte[] file, BigInteger privateKey, BigInteger modNum) {
     	
     	byte[] decrypted = file;
         for (byte c : decrypted) {
         	BigInteger C = BigDecimal.valueOf(c).toBigInteger();
-        	c = (byte) ((C.pow(d)).mod(mod)).intValue();
+        	c = (byte) ((C.pow(privateKey.intValue())).mod(modNum)).intValue();
         }
         return decrypted;
     }
@@ -67,7 +67,7 @@ public class RSA {
             return gcd(z % e, e);
     }
     
-    int getPrivateKey( ) {
+    BigInteger getPrivateKey( ) {
     	return d;
     }
     

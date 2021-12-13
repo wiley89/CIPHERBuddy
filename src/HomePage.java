@@ -187,6 +187,97 @@ public class HomePage extends JFrame {
         });
 
 
+        // RSA Encrypt
+        JPanel rsaEncryptPanel = new JPanel(new GridBagLayout());
+        constr = new GridBagConstraints();
+        //constr.insets = new Insets(5, 5, 5, 5);
+        //constr.anchor = GridBagConstraints.WEST;
+
+        constr.gridx=0; constr.gridy=0;;
+        processLabel = new JLabel("");
+
+        cipherLabel = new JLabel("Encipher result:");
+        JLabel rsaResult = new JLabel("");
+        JLabel rsaExplanationLabel1 = new JLabel("The RSA cipher generates a private and public key, ");
+        JLabel rsaExplanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
+        JLabel rsaExplanationLabel3 = new JLabel("of the corresponding key character");
+
+
+        constr.gridx=0; constr.gridy=1;
+        rsaEncryptPanel.add(cipherLabel, constr);
+        constr.gridx=1;
+        rsaEncryptPanel.add(rsaResult, constr);
+        constr.gridx=0; constr.gridy=2;
+        constr.gridx=0; constr.gridy=3;
+        rsaEncryptPanel.add(processLabel, constr);
+        constr.gridx=1;
+        rsaEncryptPanel.add(explanationLabel1, constr);
+        constr.gridy=4;
+        rsaEncryptPanel.add(explanationLabel2, constr);
+        constr.gridy=5;
+        rsaEncryptPanel.add(explanationLabel3, constr);
+        constr.gridy=6;
+        //constr.gridwidth = 1;
+        constr.anchor = GridBagConstraints.CENTER;
+        //encrypt button
+        JButton rsaEncryptButton = new JButton("Encrypt");
+        rsaEncryptPanel.add(rsaEncryptButton, constr);
+        constr.gridy=7;
+        JButton rsaDecryptButton = new JButton("Decrypt and render file");
+        rsaEncryptPanel.add(rsaDecryptButton, constr);
+        RSA rsa = new RSA();
+
+
+        // Encrypts byte array with key with RSA Cipher
+        rsaEncryptButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+
+                try {
+                    resultArray = rsa.encryptByteArray(str2ByteArray(filePath));
+                    result.setText("Encrypted byte array printed to console");
+                    System.out.println("Encrypted byte array");
+                    System.out.println(Arrays.toString(resultArray));
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+
+        rsaDecryptButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                try {
+                    fileRenderer(rsa.decryptByteArray(resultArray, rsa.getPrivateKey(), rsa.getMod()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+        });
+
+
+        //opens the RSA Encrypt Page
+        enRsaButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                if(e.getSource()== enRsaButton)
+                {
+                    remove(encryptPanel);
+                    add(rsaEncryptPanel);
+                }
+            }
+        });
+
+
+
+
+
         //file chooser buttons
         openFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
