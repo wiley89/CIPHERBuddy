@@ -1,3 +1,4 @@
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -66,5 +67,12 @@ public class RSA {
             return gcd(z % e, e);
     }
     
+    int getPrivateKey( ) {
+    	return d;
+    }
+    
+    BigInteger getMod( ) {
+    	return mod;
+    }
     
 }
