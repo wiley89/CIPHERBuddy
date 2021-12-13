@@ -6,11 +6,12 @@ import java.security.SecureRandom;
 
 public class RSA {
 	
-
-	
 	private final static BigInteger one = new BigInteger("1");
 	private final static SecureRandom random = new SecureRandom();
 	
+	private int e;
+	private int d = 0;
+	private BigInteger mod;
 
     public static void main (String [] arguments) throws IOException {
     }
@@ -19,9 +20,8 @@ public class RSA {
     public byte[] encryptByteArray(byte[] file) {
     	BigInteger p = BigInteger.probablePrime(2, random);
     	BigInteger q = BigInteger.probablePrime(2, random);
-    	BigInteger mod = p.multiply(q);
+    	mod = p.multiply(q);
     	BigInteger T = (p.subtract(one)).multiply(q.subtract(one));
-    	int e;
     	for (e = 2; e < T.intValue(); e++) {
     		 
             // e is for public key exponent
@@ -30,7 +30,6 @@ public class RSA {
             }
         }
     	System.out.println("the value of e = " + e);
-    	int d = 0;
         for (int i = 0; i <= 9; i++) {
             int x = 1 + (i * T.intValue());
  
@@ -49,11 +48,12 @@ public class RSA {
     }
  
     // Decrypting the message
-    public byte[] decryptByteArray(byte[] file, BigInteger privateKey, BigInteger mod) {
+    public byte[] decryptByteArray(byte[] file) {
+    	
     	byte[] decrypted = file;
         for (byte c : decrypted) {
         	BigInteger C = BigDecimal.valueOf(c).toBigInteger();
-        	c = (byte) ((C.pow(privateKey.intValue())).mod(mod)).intValue();
+        	c = (byte) ((C.pow(d)).mod(mod)).intValue();
         }
         return decrypted;
     }
