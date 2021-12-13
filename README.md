@@ -7,7 +7,7 @@ RSA is fully implemented and can be used with the CIPHERBuddy application.
 
 
 ElGamal:
-ElGamal is fully implemented and can be used with the CIPHERBuddy application.
+Run The Main method in ElGamal class. Input a key and a message to be encrypted.
 
 DES:
 The DES encryption and decryption is not fully functional and therefore not avaliable in the interface. 
