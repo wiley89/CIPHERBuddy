@@ -327,12 +327,27 @@ public class HomePage extends JFrame {
         return fileContent;
     }
 
-    public File fileRenderer(byte[] decrypted) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream b = new ByteArrayInputStream(decrypted);
-        ObjectInputStream o = new ObjectInputStream(b);
-        File renderedFile = (File) o.readObject();
-        b.close();
-        o.close();
-        return renderedFile;
+    public void fileRenderer(byte[] decrypted) throws IOException, ClassNotFoundException {
+        File file =  new File("");
+        try {
+
+            // Initialize a pointer
+            // in file using OutputStream
+            OutputStream
+                    os
+                    = new FileOutputStream(file);
+
+            // Starts writing the bytes in it
+            os.write(decrypted);
+            System.out.println("Successfully"
+                    + " byte inserted");
+
+            // Close the file
+            os.close();
+        }
+
+        catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
     }
 }
