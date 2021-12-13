@@ -8,8 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Random;
 
 public class HomePage extends JFrame {
+
+    Random rand = new Random();
 
     JPanel homePanel;
     JPanel fileChooserPanel;
@@ -100,7 +103,7 @@ public class HomePage extends JFrame {
         JLabel processLabel = new JLabel("");
 
         JLabel cipherLabel = new JLabel("Encipher result:");
-        JLabel result = new JLabel("");
+        JLabel result = new JLabel("Encrypted byte array is printed in the console");
         JLabel explanationLabel1 = new JLabel("The vigenere cipher uses an polyalphabetic  key, ");
         JLabel explanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
         JLabel explanationLabel3 = new JLabel("of the corresponding key character");
@@ -182,6 +185,7 @@ public class HomePage extends JFrame {
                 {
                     remove(encryptPanel);
                     add(vigEncryptPanel);
+                    pack();
                 }
             }
         });
@@ -197,10 +201,10 @@ public class HomePage extends JFrame {
         processLabel = new JLabel("");
 
         cipherLabel = new JLabel("Encipher result:");
-        JLabel rsaResult = new JLabel("");
-        JLabel rsaExplanationLabel1 = new JLabel("The RSA cipher generates a private and public key, ");
-        JLabel rsaExplanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
-        JLabel rsaExplanationLabel3 = new JLabel("of the corresponding key character");
+        JLabel rsaResult = new JLabel("Encrypted byte array is printed in the console");
+        JLabel rsaExplanationLabel1 = new JLabel("The RSA cipher generates random probable prime numbers p and q, which is used to generate the modulus.");
+        JLabel rsaExplanationLabel2 = new JLabel("The public key, which is generated, is used to generate a private key ");
+        JLabel rsaExplanationLabel3 = new JLabel("A message can be encrypted using the public key and decrypted using the private key.");
 
 
         constr.gridx=0; constr.gridy=1;
@@ -211,11 +215,11 @@ public class HomePage extends JFrame {
         constr.gridx=0; constr.gridy=3;
         rsaEncryptPanel.add(processLabel, constr);
         constr.gridx=1;
-        rsaEncryptPanel.add(explanationLabel1, constr);
+        rsaEncryptPanel.add(rsaExplanationLabel1, constr);
         constr.gridy=4;
-        rsaEncryptPanel.add(explanationLabel2, constr);
+        rsaEncryptPanel.add(rsaExplanationLabel2, constr);
         constr.gridy=5;
-        rsaEncryptPanel.add(explanationLabel3, constr);
+        rsaEncryptPanel.add(rsaExplanationLabel3, constr);
         constr.gridy=6;
         //constr.gridwidth = 1;
         constr.anchor = GridBagConstraints.CENTER;
@@ -270,11 +274,99 @@ public class HomePage extends JFrame {
                 {
                     remove(encryptPanel);
                     add(rsaEncryptPanel);
+                    pack();
                 }
             }
         });
 
 
+        //El Gamal
+        JPanel elGamalEncryptPanel = new JPanel(new GridBagLayout());
+        constr = new GridBagConstraints();
+        //constr.insets = new Insets(5, 5, 5, 5);
+        //constr.anchor = GridBagConstraints.WEST;
+
+        constr.gridx=0; constr.gridy=0;;
+        processLabel = new JLabel("");
+
+        cipherLabel = new JLabel("Encipher result:");
+        JLabel elGamalResult = new JLabel("Encrypted byte array is printed in the console");
+        JLabel elGamalExplanationLabel1 = new JLabel("The RSA cipher generates a private and public key, ");
+        JLabel elGamalExplanationLabel2 = new JLabel("it ciphers each character with the caesar cipher");
+        JLabel elGamalExplanationLabel3 = new JLabel("of the corresponding key character");
+
+
+        constr.gridx=0; constr.gridy=1;
+        elGamalEncryptPanel.add(cipherLabel, constr);
+        constr.gridx=1;
+        elGamalEncryptPanel.add(elGamalResult, constr);
+        constr.gridx=0; constr.gridy=2;
+        constr.gridx=0; constr.gridy=3;
+        elGamalEncryptPanel.add(processLabel, constr);
+        constr.gridx=1;
+        elGamalEncryptPanel.add(elGamalExplanationLabel1, constr);
+        constr.gridy=4;
+        elGamalEncryptPanel.add(elGamalExplanationLabel2, constr);
+        constr.gridy=5;
+        elGamalEncryptPanel.add(elGamalExplanationLabel3, constr);
+        constr.gridy=6;
+        //constr.gridwidth = 1;
+        constr.anchor = GridBagConstraints.CENTER;
+        //encrypt button
+        JButton elGamalEncryptButton = new JButton("Encrypt");
+        elGamalEncryptPanel.add(elGamalEncryptButton, constr);
+        constr.gridy=7;
+        JButton elGamalDecryptButton = new JButton("Decrypt and render file");
+        elGamalEncryptPanel.add(elGamalDecryptButton, constr);
+
+
+        // Encrypts byte array with key with RSA Cipher
+        elGamalEncryptButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+
+                try {
+                    resultArray = rsa.encryptByteArray(str2ByteArray(filePath));
+                    result.setText("Encrypted byte array printed to console");
+                    System.out.println("Encrypted byte array");
+                    System.out.println(Arrays.toString(resultArray));
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+
+        elGamalDecryptButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                try {
+                    fileRenderer(rsa.decryptByteArray(resultArray, rsa.getPrivateKey(), rsa.getMod()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+        });
+
+
+        //opens the RSA Encrypt Page
+        enElGamalButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                if(e.getSource()== enElGamalButton)
+                {
+                    remove(encryptPanel);
+                    add(elGamalEncryptPanel);
+
+                    pack();
+                }
+            }
+        });
 
 
 
@@ -307,6 +399,7 @@ public class HomePage extends JFrame {
                 System.out.println("hello");
                 remove(fileChooserPanel);
                 add(homePanel);
+                pack();
             }
         });
 
@@ -317,6 +410,7 @@ public class HomePage extends JFrame {
             {
                 remove(homePanel);
                 add(encryptPanel);
+                pack();
             }
         });
 
@@ -333,7 +427,7 @@ public class HomePage extends JFrame {
     }
 
     public void fileRenderer(byte[] decrypted) throws IOException, ClassNotFoundException {
-        File file =  new File("file");
+        File file =  new File("file"); //+ rand.nextInt(1000));
         //file.createNewFile();
         try {
 
